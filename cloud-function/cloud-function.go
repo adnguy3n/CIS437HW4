@@ -52,7 +52,12 @@ func visitorCounter(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	count, _ := firestoreCount.(int64)
+	count, ok := firestoreCount.(int64)
+	if !ok {
+		log.Print("Count cast to int64 failed.")
+		w.WriteHeader(http.StatusNotAcceptable)
+		return
+	}
 
 	newCount := count + 1
 
