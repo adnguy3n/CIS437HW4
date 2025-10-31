@@ -51,12 +51,14 @@ func visitorCounter(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Failed to get document: %v", err)
 		w.Header().Set("Access-Control-Allow-Origin", allowedOrigin)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+
 	}
 
 	countData, err := doc.DataAt("count")
 	if err == nil {
 		count, err := countData.(int64)
 		if err {
+
 			currentCount = count
 		}
 	}
@@ -68,6 +70,7 @@ func visitorCounter(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Failed to set new count: %v", err)
 		w.Header().Set("Access-Control-Allow-Origin", allowedOrigin)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+
 	}
 
 	w.Header().Set("Content-Type", "application/json")
