@@ -55,12 +55,15 @@ func visitorCounter(w http.ResponseWriter, r *http.Request) {
 	}
 
 	countData, err := doc.DataAt("count")
-	if err == nil {
-		count, err := countData.(int64)
-		if err {
+	if err != nil {
+		log.Printf("Failed to get current count: %v", err)
+		w.Header().Set("Access-Control-Allow-Origin", allowedOrigin)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	}
 
-			currentCount = count
-		}
+	count, castSuccess := countData.(int64)
+	if castSuccess {
+		currentCount = count
 	}
 
 	newCount := currentCount + 1
