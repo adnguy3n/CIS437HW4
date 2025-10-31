@@ -64,6 +64,10 @@ func visitorCounter(w http.ResponseWriter, r *http.Request) {
 	count, castSuccess := countData.(int64)
 	if castSuccess {
 		currentCount = count
+	} else {
+		log.Print("Failed to convert count to int64.")
+		w.Header().Set("Access-Control-Allow-Origin", allowedOrigin)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 
 	newCount := currentCount + 1
