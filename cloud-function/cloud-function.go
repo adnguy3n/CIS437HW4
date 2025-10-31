@@ -19,6 +19,7 @@ type CounterResponse struct {
 func init() {
 	ctx := context.Background()
 	projectID := "cis437-hw4-476803"
+	// The amount of trouble that forgetting the databaseID gave me was just the worst.
 	databaseID := "visitor-count-db"
 
 	var err error
